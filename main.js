@@ -3,16 +3,7 @@ require('electron-reload')(__dirname);
 // Module to control application life.
 const app = electron.app
 // Module to create native browser window.
-const BrowserWindow = electron.BrowserWindow
-
-var bcrypt = require('bcrypt');
-const saltRounds = 10;
-const myPlaintextPassword = 's0/\/\P4$$w0rD';
-const someOtherPlaintextPassword = 'not_bacon';
-
-bcrypt.hash(myPlaintextPassword, saltRounds, function(err, hash) {
-  console.log('Hashed Password:-',hash);
-});
+const BrowserWindow = electron.BrowserWindow;
 
 const path = require('path')
 const url = require('url')
@@ -33,7 +24,7 @@ function createWindow () {
   }))
 
   // Open the DevTools.
-  // mainWindow.webContents.openDevTools()
+   mainWindow.webContents.openDevTools()
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
