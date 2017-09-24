@@ -12,7 +12,41 @@ const url = require('url')
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
 
-function createWindow () {
+app.setBadgeCount(55);
+
+// get important file system path
+console.log(app.getPath('desktop')); // get desktop location
+console.log(app.getPath('music')); // get music folder location
+console.log(app.getPath('temp')); // C:\Users\{user}-~1\AppData\Local\Temp 
+console.log(app.getPath('userData')); // get path of user data storage (Eg: C:\Users\{username}\AppData\Roaming\electron-quick-start)
+
+
+// This method will be called when Electron has finished
+// initialization and is ready to create browser windows.
+// Some APIs can only be used after this event occurs.
+
+// Before quitting Event
+app.on('before-quit',function(e){
+  console.log('App is about to quit. Stopping Quitting');
+
+  //to prevent the default behavior of before-quit evnet.
+  // e.preventDefault();
+})
+
+// when window is blur we can quit app after 3 second using app.quit() method
+// Browser window  blur envent
+app.on('browser-window-blur',function(){
+  console.log('App is no longer focused.');
+  // setTimeout(app.quit, 3000);
+});
+
+// Browser windows focus
+app.on('browser-window-focus',function(){
+  console.log('App is on foucus now.');
+});
+
+
+app.on('ready', function (e) {
   // Create the browser window.
   mainWindow = new BrowserWindow({width: 800, height: 600})
 
@@ -24,7 +58,7 @@ function createWindow () {
   }))
 
   // Open the DevTools.
-   mainWindow.webContents.openDevTools()
+  //  mainWindow.webContents.openDevTools()
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
@@ -33,12 +67,7 @@ function createWindow () {
     // when you should delete the corresponding element.
     mainWindow = null
   })
-}
-
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-// Some APIs can only be used after this event occurs.
-app.on('ready', createWindow)
+})
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function () {
